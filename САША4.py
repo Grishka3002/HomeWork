@@ -2,7 +2,7 @@
 import math
 b = list(map(float, input().split(',')))
 def a(b):
-    for i in range (len(b)):
+    for i in range(len(b)):
         if b[i] == 0 or b[i] < 0:
             b[i] = None
             continue
