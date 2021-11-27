@@ -1,0 +1,7 @@
+#10.Напишите программу на Python для печати четных чисел из заданного списка. 
+a = list(map(int,input().split(",")))
+b = []
+for i in range(len(a)):
+    if a[i] % 2 == 0:
+        b.append(a[i])
+print(b)
