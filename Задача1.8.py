@@ -2,9 +2,11 @@
 a = list(map(int,input().split(',')))
 
 def uniq(a):
-    for i in range(len(a)-1):
-        for j in range(i, len(a)):
-            if a[i] == a[j]:
-                a.pop(i)
-    print(a)
+    b =[]
+    for i in a:
+        if i in b:
+            continue
+        else:
+            b.append(i)
+    print(b)
 uniq(a)
