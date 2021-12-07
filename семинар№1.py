@@ -21,5 +21,5 @@ for i in a:
 for i in range(len(b)):
     if len(b[i]) != 0:
         linkd.append(b[i])
-
+print(linkd)
 
