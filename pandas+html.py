@@ -31,5 +31,4 @@ for i in range(5,len(allinfo),6):
 
 df = pd.DataFrame({'Страна': country, 'HPI': hpi, 'Удовлетворенность жизнью': lifeQ, 'Ожидаемая продолжительность жизни': lifeExp, 'Экологический след': EcoTrail })
 df.head()
-#df1 = df.to_string(index=False)
-df.to_csv("html-Пинчук.csv")
+df.to_csv("html-Пинчук.csv", sep=";", encoding='utf-8', index=False)

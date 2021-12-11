@@ -32,6 +32,5 @@ for a in soup.find_all('article', {"class":"item item-news item-news- _exist-ima
     res.append({'link':link, 'date':date, 'author':author, 'desc':desc, 'title':title, 'text':texts, 'rubric':rubrics.strip(), 'diff':[dif]})
     sleep(2)
 df = pandas.DataFrame(res)
-print(df)
 df.head()
 df.to_csv("Семинар1.csv", sep=";", encoding='utf-8', index=False)
