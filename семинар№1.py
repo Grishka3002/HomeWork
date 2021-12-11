@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import re
 from time import sleep
 
 url = "https://nplus1.ru/"
