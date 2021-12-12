@@ -64,3 +64,7 @@ for i in range(1,891-count+1):
 
 df = pd.DataFrame({'PassengerId':Passenger,'Survived': Survived, 'Pclass':Pclass, 'Name':Name, 'Sex':Sex, 'Age':Age, 'SibSp':SibSp, 'Parch':Parch, 'Ticket':Ticket, 'Fare':Fare, 'Cabin':Cabin, 'Embarked':Embarked})
 df.to_csv("C:\\Users\\Иван\\Desktop\\Titanic.csv", encoding='utf-8', index = False)
+
+datatypes = df.dtypes 
+for dtype in datatypes: 
+    print(dtype)
