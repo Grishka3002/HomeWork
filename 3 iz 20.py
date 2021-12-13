@@ -1,3 +1,9 @@
 #Функция, чтобы умножала все числа в списке
-import math
-print (math.prod([8, 2, 3, -1, 7]))
+a = list(map(int,input().split(',')))
+
+def multiply(a):
+    i = 1
+    for n in range(len(a)):
+        i = i * a[n]
+    print(s)
+multiply(a)
