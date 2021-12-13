@@ -77,6 +77,7 @@ c = 0
 datatypes = df.dtypes 
 for dtype in datatypes: 
     c += 1
-Type.append(datatypes)   
-Type.array_split(Type,12)
-print(Type)
+    Type.append(dtype)
+Name_col = ['PassengerId','Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin',' Embarked']
+print(pd.DataFrame({"Name_col": Name_col, "Type": Type}))   
+
