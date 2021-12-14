@@ -20,10 +20,12 @@ count = 0
 Passenger = []
 index = []
 c = 0
+Type = []
+Name_col = ['PassengerId','Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
 
 text = doc.read()
 
-df = pd.read_csv('C:\\Users\\Иван\\Downloads\\Titanic.csv',index_col="PassengerId")
+data = pd.read_csv('C:\\Users\\Иван\\Downloads\\Titanic.csv',index_col="PassengerId")
 
 with open("C:\\Users\\Иван\\Downloads\\Titanic.csv", encoding='utf-8') as r_file:
     file_reader = csv.DictReader(r_file, delimiter = ",")
@@ -51,7 +53,7 @@ for i in range(len(alls)):
             index.append(i) 
             count += 1
             break
-
+c = 0
 for i in index:
     i = i - c 
     c += 1
@@ -65,6 +67,9 @@ for i in range(1,891-count+1):
 df = pd.DataFrame({'PassengerId':Passenger,'Survived': Survived, 'Pclass':Pclass, 'Name':Name, 'Sex':Sex, 'Age':Age, 'SibSp':SibSp, 'Parch':Parch, 'Ticket':Ticket, 'Fare':Fare, 'Cabin':Cabin, 'Embarked':Embarked})
 df.to_csv("C:\\Users\\Иван\\Desktop\\Titanic.csv", encoding='utf-8', index = False)
 
+c = 0
 datatypes = df.dtypes 
 for dtype in datatypes: 
-    print(dtype)
+    Type.append(dtype)
+    c += 1
+print(data.describe())
