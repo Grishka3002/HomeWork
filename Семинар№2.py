@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import csv
+import matplotlib.pyplot as plt
 
 doc = open('C:\\Users\\Иван\\Downloads\\Titanic.csv','r+')
 PassengerId =[]
@@ -22,6 +23,7 @@ index = []
 c = 0
 Type = []
 Name_col = ['PassengerId','Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
+coun = []
 
 text = doc.read()
 
@@ -72,4 +74,8 @@ datatypes = df.dtypes
 for dtype in datatypes: 
     Type.append(dtype)
     c += 1
-print(data.describe())
+    coun.append(c)
+#print(df.index.Survived)
+#print(data.describe())
+plt.bar(df['PassengerId'],df['Age'])
+plt.show()
