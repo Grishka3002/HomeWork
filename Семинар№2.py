@@ -5,77 +5,69 @@ import csv
 import matplotlib.pyplot as plt
 
 doc = open('C:\\Users\\Иван\\Downloads\\Titanic.csv','r+')
-PassengerId =[]
-Survived = []
-Pclass = []
-Name = []
-Sex = []
-Age = []
-SibSp = []
-Parch = []
-Ticket = []
-Fare = []
-Cabin = []
-Embarked = []
-count = 0
-Passenger = []
-index = []
-c = 0
-Type = []
-Name_col = ['PassengerId','Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
-coun = []
 
 text = doc.read()
 
-data = pd.read_csv('C:\\Users\\Иван\\Downloads\\Titanic.csv',index_col="PassengerId")
+df = pd.read_csv('C:\\Users\\Иван\\Downloads\\Titanic.csv',index_col="PassengerId")
 
-with open("C:\\Users\\Иван\\Downloads\\Titanic.csv", encoding='utf-8') as r_file:
-    file_reader = csv.DictReader(r_file, delimiter = ",")
-    count = 0
-    for row in file_reader:
-        if count == 0:
-            ", ".join(row)
-        PassengerId.append(row["PassengerId"])
-        Survived.append(row["Survived"])
-        Pclass.append(row["Pclass"])
-        Name.append(row["Name"])
-        Sex.append(row["Sex"])
-        Age.append(row["Age"])
-        SibSp.append(row["SibSp"])
-        Parch.append(row["Parch"])
-        Ticket.append(row["Ticket"])
-        Fare.append(row["Fare"])
-        Cabin.append(row["Cabin"])
-        Embarked.append(row["Embarked"])
+df = df.dropna(axis=0)
+df.to_csv("Titanic-new.csv")
 
-alls = list(zip(Survived, Pclass, Name, Sex, Age, SibSp, Parch, Ticket, Fare, Cabin, Embarked))       
-for i in range(len(alls)):
-    for j in range(len(alls[i])): 
-          if len(alls[i][j]) == 0:
-            index.append(i) 
-            count += 1
-            break
-c = 0
-for i in index:
-    i = i - c 
-    c += 1
-    alls.pop(i)
+for name, val in df.iteritems():
+    print(f"Colons {name}: Type={val.dtype}; кол-во={len(val)}")
+for name, val in df.iteritems():
+    if str(val.dtype) == "int64" or str(val.dtype) == "float64":
+        print(df[name].describe())
+        print('***')
 
-Survived, Pclass, Name, Sex, Age, SibSp, Parch, Ticket, Fare, Cabin, Embarked = zip(*alls)
-
-for i in range(1,891-count+1):
-    Passenger.append(i)
-
-df = pd.DataFrame({'PassengerId':Passenger,'Survived': Survived, 'Pclass':Pclass, 'Name':Name, 'Sex':Sex, 'Age':Age, 'SibSp':SibSp, 'Parch':Parch, 'Ticket':Ticket, 'Fare':Fare, 'Cabin':Cabin, 'Embarked':Embarked})
-df.to_csv("C:\\Users\\Иван\\Desktop\\Titanic.csv", encoding='utf-8', index = False)
-
-c = 0
-datatypes = df.dtypes 
-for dtype in datatypes: 
-    Type.append(dtype)
-    c += 1
-    coun.append(c)
-#print(df.index.Survived)
-#print(data.describe())
-plt.bar(df['PassengerId'],df['Age'])
+ax = df["Age"].plot(kind="hist", color="red",title="Распределение возрастов", grid=True)
+ax.set_xlabel("Age")
+ax.set_ylabel("Freq")
 plt.show()
+
+df["Fare"].describe()
+
+df.rename(columns={"Pclass" : "Class"}, inplace=True)
+print(list(df))
+
+female = df[df["Sex"] == "female"]
+print(female["Sex"])
+
+Ymale = df[(df["Sex"] == "male") & (df["Age"] < 32)]
+print(Ymale["Age"])
+print(Ymale["Sex"])
+
+nobles = df[(df["Class"] == 1) | (df["Class"] == 2)]
+nobles_alive = df[((df["Class"] == 1) | (df["Class"] == 2)) & (df["Survived"] == 1)]
+print(nobles["Survived"])
+
+female_column = df.rename(columns={"Sex":"Female"})["Female"]
+female_column = female_column.apply(lambda x: 1 if x == 'female' else 0)
+femaled_df = df.join(female_column)
+print(femaled_df["Female"])
+
+df = femaled_df
+
+for val in df["Embarked"].unique():
+    print(val)
+
+group = df.groupby(df["Survived"])
+
+for col in ['Age', 'SibSp', 'Parch', 'Fare']:
+    print(group[col].mean())
+    print("\n***")
+
+group = df["Age"].groupby(df["Sex"])
+
+(f_0, m_0) = group.mean()
+(f_1, m_1) = group.median()
+
+grouped_df = pd.DataFrame({"male" : [m_0, m_1], "female": [f_0, f_1]}, ["Среднее:", "Медианное:"])
+print(grouped_df.to_string())
+
+for col in list(df):
+    df.rename(columns={col : col.lower()}, inplace=True)
+
+print(list(df))
+
+df.to_csv("Titanic-new.csv")
